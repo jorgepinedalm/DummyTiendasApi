@@ -21,7 +21,9 @@ namespace DemoTiendasApi.Services
             DocTypes = new List<DocType>
             {
                 new() { Id = 1, Code = "CC", Description = "Cédula de ciudadanía" },
-                new() { Id = 2, Code = "NIT", Description = "NIT" }
+                new() { Id = 2, Code = "CE", Description = "Cédula de extranjeria" },
+                new() { Id = 3, Code = "PA", Description = "Pasaporte" },
+                new() { Id = 4, Code = "NIT", Description = "NIT" }
             };
 
                 // Suppliers
@@ -41,16 +43,16 @@ namespace DemoTiendasApi.Services
                 // Payment Methods
                 PaymentMethods = new List<PaymentMethod>
             {
-                new() { Id = 1, Name = "Efectivo" },
-                new() { Id = 2, Name = "Transferencia" },
-                new() { Id = 3, Name = "Tarjeta" }
+                new() { Id = 1, Name = "Pago de contado" },
+                new() { Id = 2, Name = "Pago de crédito" },
             };
 
                 // Presentations
                 Presentations = new List<Presentation>
             {
                 new() { Id = 1, Name = "Caja" },
-                new() { Id = 2, Name = "Botella" }
+                new() { Id = 2, Name = "Paquete" },
+                new() { Id = 3, Name = "Unidad" }
             };
 
                 // Measurement Units
@@ -58,20 +60,32 @@ namespace DemoTiendasApi.Services
             {
                 new() { Id = 1, Name = "Unidad" },
                 new() { Id = 2, Name = "Litro" },
-                new() { Id = 3, Name = "Kilogramo" }
+                new() { Id = 3, Name = "Mililitro" },
+                new() { Id = 4, Name = "Gramo" },
+                new() { Id = 5, Name = "Kilogramo" },
+                new() { Id = 6, Name = "Metro" },
+                new() { Id = 7, Name = "Centimetro" }
             };
 
                 // Taxes
                 PurchaseTaxes = new List<PurchaseTax>
             {
-                new() { Id = 1, Name = "IVA 19%", Value = 0.19m },
-                new() { Id = 2, Name = "IVA 5%", Value = 0.05m }
+                new() { Id = 1, Name = "Exento", Value = 0 },
+                new() { Id = 2, Name = "Excluido", Value = 0 },
+                new() { Id = 3, Name = "IVA 5%", Value = 0.05m },
+                new() { Id = 4, Name = "IVA 8%", Value = 0.08m },
+                new() { Id = 5, Name = "IVA 16%", Value = 0.16m },
+                new() { Id = 6, Name = "IVA 19%", Value = 0.19m },
             };
 
                 SalesTaxes = new List<SalesTax>
             {
-                new() { Id = 1, Name = "IVA 19%", Value = 0.19m },
-                new() { Id = 2, Name = "IVA 5%", Value = 0.05m }
+                new() { Id = 1, Name = "Exento", Value = 0 },
+                new() { Id = 2, Name = "Excluido", Value = 0 },
+                new() { Id = 3, Name = "IVA 5%", Value = 0.05m },
+                new() { Id = 4, Name = "IVA 8%", Value = 0.08m },
+                new() { Id = 5, Name = "IVA 16%", Value = 0.16m },
+                new() { Id = 6, Name = "IVA 19%", Value = 0.19m },
             };
 
                 // Products
