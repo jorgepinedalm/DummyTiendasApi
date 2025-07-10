@@ -1,4 +1,5 @@
-﻿using DemoTiendasApi.Models;
+﻿using DemoTiendasApi.Dtos;
+using DemoTiendasApi.Models;
 using DemoTiendasApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,13 +13,12 @@ namespace DemoTiendasApi.Controllers
 
         [HttpGet]
         public IActionResult Get(
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] int? supplierId = null,
-            [FromQuery] int? warehouseId = null,
-            [FromQuery] DateTime? from = null,
-            [FromQuery] DateTime? to = null
-)
+    [FromQuery] int page = 1,
+    [FromQuery] int pageSize = 10,
+    [FromQuery] int? supplierId = null,
+    [FromQuery] int? warehouseId = null,
+    [FromQuery] DateTime? from = null,
+    [FromQuery] DateTime? to = null)
         {
             var query = _data.Purchases.AsQueryable();
 
@@ -36,7 +36,6 @@ namespace DemoTiendasApi.Controllers
 
             var totalCount = query.Count();
 
-            // Paginación segura
             if (page < 1) page = 1;
             if (pageSize < 1) pageSize = 10;
 
@@ -46,14 +45,95 @@ namespace DemoTiendasApi.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            // Devuelve también datos de paginación
+            // Proyección enriquecida
+            var result = purchases.Select(p => new PurchaseDto
+            {
+                Id = p.Id,
+                Warehouse = _data.Warehouses.FirstOrDefault(w => w.Id == p.WarehouseId),
+                Supplier = _data.Suppliers.FirstOrDefault(s => s.Id == p.SupplierId),
+                PaymentMethod = _data.PaymentMethods.FirstOrDefault(pm => pm.Id == p.PaymentMethodId),
+                InvoiceNumber = p.InvoiceNumber,
+                Date = p.Date,
+                CashAmount = p.CashAmount,
+                TransferAmount = p.TransferAmount,
+                CardAmount = p.CardAmount,
+                Products = [.. p.Products.Select(pp => new PurchaseProductDto
+                {
+                    Product = _data.Products.FirstOrDefault(prod => prod.Id == pp.ProductId),
+                    Quantity = pp.Quantity,
+                    UnitPrice = pp.SalePrice
+                })]
+            }).ToList();
+
             return Ok(new
             {
                 page,
                 pageSize,
                 totalCount,
                 totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
-                items = purchases
+                items = result
+            });
+        }
+
+        [HttpGet("summary")]
+        public IActionResult GetSummary(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] int? supplierId = null,
+            [FromQuery] int? warehouseId = null,
+            [FromQuery] DateTime? from = null,
+            [FromQuery] DateTime? to = null)
+        {
+            var query = _data.Purchases.AsQueryable();
+
+            if (supplierId.HasValue)
+                query = query.Where(x => x.SupplierId == supplierId.Value);
+
+            if (warehouseId.HasValue)
+                query = query.Where(x => x.WarehouseId == warehouseId.Value);
+
+            if (from.HasValue)
+                query = query.Where(x => x.Date >= from.Value);
+
+            if (to.HasValue)
+                query = query.Where(x => x.Date <= to.Value);
+
+            var totalCount = query.Count();
+            if (page < 1) page = 1;
+            if (pageSize < 1) pageSize = 10;
+
+            var purchases = query
+                .OrderByDescending(x => x.Date)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            var results = purchases.Select(p =>
+            {
+                // Subtotal: suma de (unitPrice * quantity) de los productos de la compra
+                decimal subtotal = p.Products.Sum(pp => pp.CostWithTax * pp.Quantity);
+                decimal total = subtotal * 1.19M; // 19% cargo
+
+                return new PurchaseSummaryDto
+                {
+                    Id = p.Id,
+                    WarehouseName = _data.Warehouses.FirstOrDefault(w => w.Id == p.WarehouseId)?.Name ?? "",
+                    InvoiceNumber = p.InvoiceNumber,
+                    SupplierName = _data.Suppliers.FirstOrDefault(s => s.Id == p.SupplierId)?.Name ?? "",
+                    Date = p.Date.ToString("yyyy-MM-dd HH:mm:ss"),
+                    Charges = "19%",
+                    Subtotal = subtotal,
+                    Total = total
+                };
+            }).ToList();
+
+            return Ok(new
+            {
+                page,
+                pageSize,
+                totalCount,
+                totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+                items = results
             });
         }
 
@@ -84,7 +164,7 @@ namespace DemoTiendasApi.Controllers
             }
 
             // Calcula el total ingresado para los productos de la compra
-            decimal total = purchase.Products.Sum(x => x.TotalPrice * x.Quantity);
+            decimal total = purchase.Products.Sum(x => x.CostWithTax * x.Quantity);
 
             if (purchase.PaymentMethodId == 1)
             {

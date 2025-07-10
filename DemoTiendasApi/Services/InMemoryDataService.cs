@@ -150,8 +150,8 @@ namespace DemoTiendasApi.Services
                     Date = DateTime.UtcNow.AddDays(-2),
                     Products =
                     [
-                        new() { ProductId = 1, Quantity = 10, TotalPrice = 10000 },
-                        new() { ProductId = 2, Quantity = 5, TotalPrice = 5000 }
+                        new() { ProductId = 1, Quantity = 12, CostWithoutTax = 4000, CostWithTax = 4200, SalePrice= 4998, PurchaseTax = 0.05m,  TotalPrice = 50400 },
+                        new() { ProductId = 2, Quantity = 5, CostWithoutTax = 10000, CostWithTax = 10000, SalePrice= 11900, PurchaseTax = 0m,  TotalPrice = 50000 }
                     ]
                 }
             };
