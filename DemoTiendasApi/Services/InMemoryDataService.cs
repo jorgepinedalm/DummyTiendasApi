@@ -119,7 +119,22 @@ namespace DemoTiendasApi.Services
                     NetContent = 2,
                     Manufacturer = "Oliosa",
                     Brand = "Oliosa",
-                    Image = null
+                    Image = "https://picsum.photos/200/300"
+                },
+                new() {
+                    Id = 3,
+                    MeasurementUnitId = 3,
+                    PurchaseTaxId = 2,
+                    SalesTaxId = 2,
+                    PresentationId = 1,
+                    EAN = "7702354955793",
+                    Name = "Coca cola",
+                    Description = "Bebida gaseosa",
+                    SalesPrice = 12000,
+                    NetContent = 2000,
+                    Manufacturer = null,
+                    Brand = null,
+                    Image = "https://www.mipymestore.com/wp-content/uploads/2023/12/gaseosa-de-litro-y-medio-de-cocacola.png"
                 }
             };
 

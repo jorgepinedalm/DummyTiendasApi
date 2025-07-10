@@ -15,5 +15,6 @@
         public string? Manufacturer { get; set; }
         public string? Brand { get; set; }
         public string? Image { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }
