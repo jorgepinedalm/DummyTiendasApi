@@ -1,6 +1,6 @@
 ﻿namespace DemoTiendasApi.Models
 {
-    public class MeasurementUnit
+    public class Warehouse
     {
         public int Id { get; set; }
         public required string Name { get; set; }
