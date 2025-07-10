@@ -11,5 +11,8 @@
         public int Quantity { get; set; }
         public DateTime Date { get; set; }
         public List<PurchaseProduct> Products { get; set; } = new();
+        public decimal? CashAmount { get; set; }
+        public decimal? TransferAmount { get; set; }
+        public decimal? CardAmount { get; set; }
     }
 }

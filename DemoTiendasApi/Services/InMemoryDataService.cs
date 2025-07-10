@@ -18,46 +18,46 @@ namespace DemoTiendasApi.Services
         public InMemoryDataService()
         {
             // Doc Types
-            DocTypes = new List<DocType>
-            {
+            DocTypes =
+            [
                 new() { Id = 1, Code = "CC", Description = "Cédula de ciudadanía" },
                 new() { Id = 2, Code = "CE", Description = "Cédula de extranjeria" },
                 new() { Id = 3, Code = "PA", Description = "Pasaporte" },
                 new() { Id = 4, Code = "NIT", Description = "NIT" }
-            };
+            ];
 
                 // Suppliers
-                Suppliers = new List<Supplier>
-            {
+                Suppliers =
+            [
                 new() { Id = 1, Name = "Proveedor Uno", DocTypeId = 2, Identification = 900123456, Address = "Calle 1 #12-34", Phone = "3001234567", Email = "proveedor1@correo.com" },
                 new() { Id = 2, Name = "Proveedor Dos", DocTypeId = 2, Identification = 900987654, Address = "Carrera 7 #56-78", Phone = "3019876543", Email = "proveedor2@correo.com" }
-            };
+            ];
 
                 // Warehouses
-                Warehouses = new List<Warehouse>
-            {
+                Warehouses =
+            [
                 new() { Id = 1, Name = "Bodega Principal" },
                 new() { Id = 2, Name = "Bodega Secundaria" }
-            };
+            ];
 
                 // Payment Methods
-                PaymentMethods = new List<PaymentMethod>
-            {
+                PaymentMethods =
+            [
                 new() { Id = 1, Name = "Pago de contado" },
                 new() { Id = 2, Name = "Pago de crédito" },
-            };
+            ];
 
                 // Presentations
-                Presentations = new List<Presentation>
-            {
+                Presentations =
+            [
                 new() { Id = 1, Name = "Caja" },
                 new() { Id = 2, Name = "Paquete" },
                 new() { Id = 3, Name = "Unidad" }
-            };
+            ];
 
                 // Measurement Units
-                MeasurementUnits = new List<MeasurementUnit>
-            {
+                MeasurementUnits =
+            [
                 new() { Id = 1, Name = "Unidad" },
                 new() { Id = 2, Name = "Litro" },
                 new() { Id = 3, Name = "Mililitro" },
@@ -65,32 +65,32 @@ namespace DemoTiendasApi.Services
                 new() { Id = 5, Name = "Kilogramo" },
                 new() { Id = 6, Name = "Metro" },
                 new() { Id = 7, Name = "Centimetro" }
-            };
+            ];
 
                 // Taxes
-                PurchaseTaxes = new List<PurchaseTax>
-            {
+                PurchaseTaxes =
+            [
                 new() { Id = 1, Name = "Exento", Value = 0 },
                 new() { Id = 2, Name = "Excluido", Value = 0 },
                 new() { Id = 3, Name = "IVA 5%", Value = 0.05m },
                 new() { Id = 4, Name = "IVA 8%", Value = 0.08m },
                 new() { Id = 5, Name = "IVA 16%", Value = 0.16m },
                 new() { Id = 6, Name = "IVA 19%", Value = 0.19m },
-            };
+            ];
 
-                SalesTaxes = new List<SalesTax>
-            {
+                SalesTaxes =
+            [
                 new() { Id = 1, Name = "Exento", Value = 0 },
                 new() { Id = 2, Name = "Excluido", Value = 0 },
                 new() { Id = 3, Name = "IVA 5%", Value = 0.05m },
                 new() { Id = 4, Name = "IVA 8%", Value = 0.08m },
                 new() { Id = 5, Name = "IVA 16%", Value = 0.16m },
                 new() { Id = 6, Name = "IVA 19%", Value = 0.19m },
-            };
+            ];
 
                 // Products
-                Products = new List<Product>
-            {
+                Products =
+            [
                 new() {
                     Id = 1,
                     MeasurementUnitId = 1,
@@ -136,7 +136,7 @@ namespace DemoTiendasApi.Services
                     Brand = null,
                     Image = "https://www.mipymestore.com/wp-content/uploads/2023/12/gaseosa-de-litro-y-medio-de-cocacola.png"
                 }
-            };
+            ];
 
                 // Purchases de ejemplo
                 Purchases = new List<Purchase>
@@ -145,14 +145,14 @@ namespace DemoTiendasApi.Services
                     Id = 1,
                     SupplierId = 1,
                     WarehouseId = 1,
-                    PaymentMethodId = 1,
+                    PaymentMethodId = 2,
                     InvoiceNumber = "FV-001",
                     Date = DateTime.UtcNow.AddDays(-2),
-                    Products = new List<PurchaseProduct>
-                    {
-                        new() { ProductId = 1, Quantity = 10 },
-                        new() { ProductId = 2, Quantity = 5 }
-                    }
+                    Products =
+                    [
+                        new() { ProductId = 1, Quantity = 10, TotalPrice = 10000 },
+                        new() { ProductId = 2, Quantity = 5, TotalPrice = 5000 }
+                    ]
                 }
             };
         }
