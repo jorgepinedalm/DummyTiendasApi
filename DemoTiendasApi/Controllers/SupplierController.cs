@@ -11,22 +11,17 @@ namespace DemoTiendasApi.Controllers
     {
         private readonly InMemoryDataService _data = data;
 
-        [HttpGet]
-        public IActionResult Get() => Ok(_data.Suppliers);
-
         [HttpGet("search")]
-        public IActionResult Search([FromQuery] string query)
+        public IActionResult Search([FromQuery] string? query)
         {
             if (string.IsNullOrWhiteSpace(query))
-                return BadRequest("Debe especificar el parámetro 'query' para la búsqueda.");
+                return Ok(Array.Empty<Supplier>());
 
             var suppliers = _data.Suppliers.AsQueryable();
 
-            // Buscar por id si es numérico
-            bool isNumeric = int.TryParse(query, out int idValue);
-
+            // Buscar por Identification (como string, sin ceros a la izquierda)
             var result = suppliers.Where(s =>
-                (isNumeric && s.Id == idValue) ||
+                (!string.IsNullOrEmpty(s.Identification.ToString()) && s.Identification.ToString().Contains(query, StringComparison.OrdinalIgnoreCase)) ||
                 (!string.IsNullOrWhiteSpace(s.Name) && s.Name.Contains(query, StringComparison.OrdinalIgnoreCase))
             );
 
@@ -40,7 +35,7 @@ namespace DemoTiendasApi.Controllers
                 return BadRequest("El nombre del proveedor es obligatorio.");
             if (dto.DocTypeId <= 0)
                 return BadRequest("Debe indicar un tipo de documento válido.");
-            if (dto.Identification <= 0)
+            if (string.IsNullOrWhiteSpace(dto.Identification))
                 return BadRequest("Debe indicar un número de identificación válido.");
 
             // Validación adicional: evitar duplicados por identificación
@@ -85,7 +80,7 @@ namespace DemoTiendasApi.Controllers
                 return BadRequest("El nombre del proveedor es obligatorio.");
             if (dto.DocTypeId <= 0)
                 return BadRequest("Debe indicar un tipo de documento válido.");
-            if (dto.Identification <= 0)
+            if (string.IsNullOrWhiteSpace(dto.Identification))
                 return BadRequest("Debe indicar un número de identificación válido.");
 
             // Validación adicional: evitar duplicados por identificación (salvo el mismo proveedor)

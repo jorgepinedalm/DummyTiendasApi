@@ -29,8 +29,8 @@ namespace DemoTiendasApi.Services
                 // Suppliers
                 Suppliers =
             [
-                new() { Id = 1, Name = "Proveedor Uno", DocTypeId = 2, Identification = 900123456, Address = "Calle 1 #12-34", Phone = "3001234567", Email = "proveedor1@correo.com" },
-                new() { Id = 2, Name = "Proveedor Dos", DocTypeId = 2, Identification = 900987654, Address = "Carrera 7 #56-78", Phone = "3019876543", Email = "proveedor2@correo.com" }
+                new() { Id = 1, Name = "Proveedor Uno", DocTypeId = 1, Identification = "900123456", Address = "Calle 1 #12-34", Phone = "3001234567", Email = "proveedor1@correo.com" },
+                new() { Id = 2, Name = "Proveedor Dos", DocTypeId = 4, Identification = "900987654", Address = "Carrera 7 #56-78", Phone = "3019876543", Email = "proveedor2@correo.com" }
             ];
 
                 // Warehouses
