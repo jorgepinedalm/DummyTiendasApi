@@ -104,7 +104,8 @@ namespace DemoTiendasApi.Services
                     NetContent = 1,
                     Manufacturer = "Colanta",
                     Brand = "Colanta",
-                    Image = null
+                    Image = null,
+                    Quantity = 5
                 },
                 new() {
                     Id = 2,
@@ -119,7 +120,8 @@ namespace DemoTiendasApi.Services
                     NetContent = 2,
                     Manufacturer = "Oliosa",
                     Brand = "Oliosa",
-                    Image = "https://picsum.photos/200/300"
+                    Image = "https://picsum.photos/200/300",
+                    Quantity = 10
                 },
                 new() {
                     Id = 3,
@@ -134,7 +136,8 @@ namespace DemoTiendasApi.Services
                     NetContent = 2000,
                     Manufacturer = null,
                     Brand = null,
-                    Image = "https://www.mipymestore.com/wp-content/uploads/2023/12/gaseosa-de-litro-y-medio-de-cocacola.png"
+                    Image = "https://i.etsystatic.com/36867827/r/il/d2ae07/4190387357/il_fullxfull.4190387357_jf6v.jpg",
+                    Quantity = 20
                 },
                 new() {
                     Id = 4,
@@ -149,7 +152,8 @@ namespace DemoTiendasApi.Services
                     NetContent = 1800,
                     Manufacturer = "Premier",
                     Brand = "Premier",
-                    Image = "https://picsum.photos/200/300"
+                    Image = "https://picsum.photos/200/300",
+                    Quantity = 3
                 },
                 new() {
                     Id = 5,
@@ -164,7 +168,8 @@ namespace DemoTiendasApi.Services
                     NetContent = 600,
                     Manufacturer = "Postobon",
                     Brand = "Postobon",
-                    Image = "https://www.mipymestore.com/wp-content/uploads/2023/12/gaseosa-de-litro-y-medio-de-cocacola.png"
+                    Image = "https://i.etsystatic.com/36867827/r/il/d2ae07/4190387357/il_fullxfull.4190387357_jf6v.jpg",
+                    Quantity = 0
                 }
             ];
 

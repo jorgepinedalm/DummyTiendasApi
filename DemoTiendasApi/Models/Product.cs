@@ -12,6 +12,7 @@
         public string? Description { get; set; }
         public decimal SalesPrice { get; set; }
         public decimal NetContent { get; set; }
+        public decimal Quantity { get; set; }
         public string? Manufacturer { get; set; }
         public string? Brand { get; set; }
         public string? Image { get; set; }
