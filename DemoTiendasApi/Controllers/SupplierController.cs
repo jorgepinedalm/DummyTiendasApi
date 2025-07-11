@@ -11,6 +11,9 @@ namespace DemoTiendasApi.Controllers
     {
         private readonly InMemoryDataService _data = data;
 
+        [HttpGet]
+        public IActionResult Get() => Ok(_data.Suppliers);
+
         [HttpGet("search")]
         public IActionResult Search([FromQuery] string? query)
         {
