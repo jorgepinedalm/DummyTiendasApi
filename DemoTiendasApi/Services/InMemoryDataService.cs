@@ -185,7 +185,7 @@ namespace DemoTiendasApi.Services
                     ]
                 },
                 new() {
-                    Id = 1,
+                    Id = 2,
                     SupplierId = 2,
                     WarehouseId = 2,
                     PaymentMethodId = 2,
