@@ -4,16 +4,18 @@ namespace DemoTiendasApi.Services
 {
     public class InMemoryDataService
     {
-        public List<Product> Products { get; set; } = new();
-        public List<Purchase> Purchases { get; set; } = new();
-        public List<Presentation> Presentations { get; set; } = new();
-        public List<MeasurementUnit> MeasurementUnits { get; set; } = new();
-        public List<PurchaseTax> PurchaseTaxes { get; set; } = new();
-        public List<SalesTax> SalesTaxes { get; set; } = new();
-        public List<Supplier> Suppliers { get; set; } = new();
-        public List<DocType> DocTypes { get; set; } = new();
-        public List<Warehouse> Warehouses { get; set; } = new();
-        public List<PaymentMethod> PaymentMethods { get; set; } = new();
+        public List<Product> Products { get; set; } = [];
+        public List<Purchase> Purchases { get; set; } = [];
+        public List<Presentation> Presentations { get; set; } = [];
+        public List<MeasurementUnit> MeasurementUnits { get; set; } = [];
+        public List<PurchaseTax> PurchaseTaxes { get; set; } = [];
+        public List<SalesTax> SalesTaxes { get; set; } = [];
+        public List<Supplier> Suppliers { get; set; } = [];
+        public List<DocType> DocTypes { get; set; } = [];
+        public List<Warehouse> Warehouses { get; set; } = [];
+        public List<PaymentMethod> PaymentMethods { get; set; } = [];
+        public List<Brand> Brands { get; set; } = [];
+        public List<Manufacturer> Manufacturers { get; set; } = [];
 
         public InMemoryDataService()
         {
@@ -88,8 +90,51 @@ namespace DemoTiendasApi.Services
                 new() { Id = 6, Name = "IVA 19%", Value = 0.19m },
             ];
 
-                // Products
-                Products =
+            Brands =
+            [
+                new Brand { Id = 1, ManufacturerId = 1, Name = "Colanta" },
+                new Brand { Id = 2, ManufacturerId = 2, Name = "Oliosa" },
+                new Brand { Id = 3, ManufacturerId = 3, Name = "Diana" },
+                new Brand { Id = 4, ManufacturerId = 4, Name = "Alpinito" },
+                new Brand { Id = 5, ManufacturerId = 5, Name = "Coca-Cola" },
+                new Brand { Id = 6, ManufacturerId = 5, Name = "Fanta" },
+                new Brand { Id = 7, ManufacturerId = 5, Name = "Big cola" },
+                new Brand { Id = 8, ManufacturerId = 6, Name = "Pepsi" },
+                new Brand { Id = 9, ManufacturerId = 6, Name = "Bretaña" },
+                new Brand { Id = 10, ManufacturerId = 6, Name = "Hit" },
+                new Brand { Id = 11, ManufacturerId = 6, Name = "Hipinto" }
+            ];
+
+                    Manufacturers = new List<Manufacturer>
+            {
+                new() {
+                    Id = 1, Name = "Colanta",
+                    Brands = [.. Brands.Where(b => b.ManufacturerId == 1)]
+                },
+                new() {
+                    Id = 2, Name = "Oliosa",
+                    Brands = [.. Brands.Where(b => b.ManufacturerId == 2)]
+                },
+                new() {
+                    Id = 3, Name = "Diana",
+                    Brands = [.. Brands.Where(b => b.ManufacturerId == 3)]
+                },
+                new() {
+                    Id = 4, Name = "Alpina",
+                    Brands = [.. Brands.Where(b => b.ManufacturerId == 4)]
+                },
+                new() {
+                    Id = 5, Name = "Coca-Cola",
+                    Brands = [.. Brands.Where(b => b.ManufacturerId == 5)]
+                },
+                new() {
+                    Id = 6, Name = "Postobon",
+                    Brands = [.. Brands.Where(b => b.ManufacturerId == 6)]
+                }
+            };
+
+            // Products
+            Products =
             [
                 new() {
                     Id = 1,
