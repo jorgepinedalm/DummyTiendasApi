@@ -1,4 +1,5 @@
-﻿using DemoTiendasApi.Models;
+﻿using DemoTiendasApi.Dtos;
+using DemoTiendasApi.Models;
 using DemoTiendasApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -68,51 +69,78 @@ namespace DemoTiendasApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        [RequestSizeLimit(6_000_000)]
+        public async Task<IActionResult> Create([FromForm] ProductCreateDto dto)
         {
+            // Validación de imagen
+            string? imageBase64 = null;
+            if (dto.Image != null)
+            {
+                if (dto.Image.Length > 5 * 1024 * 1024)
+                    return BadRequest("La imagen no debe superar los 5MB.");
+
+                using var ms = new MemoryStream();
+                await dto.Image.CopyToAsync(ms);
+                imageBase64 = Convert.ToBase64String(ms.ToArray());
+            }
+
             var newId = _data.Products.Any() ? _data.Products.Max(p => p.Id) + 1 : 1;
-            var ean = GenerateUniqueEAN13(_data);
+            var ean = GenerateUniqueEAN13(_data); // mismo método que ya tienes
 
             var newProduct = new Product
             {
                 Id = newId,
-                MeasurementUnitId = product.MeasurementUnitId,
-                PurchaseTaxId = product.PurchaseTaxId,
-                SalesTaxId = product.SalesTaxId,
-                PresentationId = product.PresentationId,
+                MeasurementUnitId = dto.MeasurementUnitId,
+                PurchaseTaxId = dto.PurchaseTaxId,
+                SalesTaxId = dto.SalesTaxId,
+                PresentationId = dto.PresentationId,
                 EAN = ean,
-                Name = product.Name,
-                Description = product.Description,
-                SalesPrice = product.SalesPrice,
-                NetContent = product.NetContent,
-                Manufacturer = product.Manufacturer,
-                Brand = product.Brand,
-                Image = product.Image,
+                Name = dto.Name,
+                Description = dto.Description,
+                SalesPrice = dto.SalesPrice,
+                NetContent = dto.NetContent,
+                Manufacturer = dto.Manufacturer,
+                Brand = dto.Brand,
+                Image = imageBase64,
                 IsDeleted = false
             };
 
             _data.Products.Add(newProduct);
+
             return CreatedAtAction(nameof(GetById), new { id = newProduct.Id }, newProduct);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Product update)
+        [RequestSizeLimit(6_000_000)] // Hasta 6MB por seguridad
+        public async Task<IActionResult> Update(int id, [FromForm] ProductUpdateDto dto)
         {
             var product = _data.Products.FirstOrDefault(p => p.Id == id && !p.IsDeleted);
             if (product == null) return NotFound();
 
             // EAN no se puede modificar
-            product.MeasurementUnitId = update.MeasurementUnitId;
-            product.PurchaseTaxId = update.PurchaseTaxId;
-            product.SalesTaxId = update.SalesTaxId;
-            product.PresentationId = update.PresentationId;
-            product.Name = update.Name;
-            product.Description = update.Description;
-            product.SalesPrice = update.SalesPrice;
-            product.NetContent = update.NetContent;
-            product.Manufacturer = update.Manufacturer;
-            product.Brand = update.Brand;
-            product.Image = update.Image;
+
+            product.MeasurementUnitId = dto.MeasurementUnitId;
+            product.PurchaseTaxId = dto.PurchaseTaxId;
+            product.SalesTaxId = dto.SalesTaxId;
+            product.PresentationId = dto.PresentationId;
+            product.Name = dto.Name;
+            product.Description = dto.Description;
+            product.SalesPrice = dto.SalesPrice;
+            product.NetContent = dto.NetContent;
+            product.Manufacturer = dto.Manufacturer;
+            product.Brand = dto.Brand;
+
+            // Manejo de imagen (si se envía)
+            if (dto.Image != null)
+            {
+                if (dto.Image.Length > 5 * 1024 * 1024)
+                    return BadRequest("La imagen no debe superar los 5MB.");
+
+                using var ms = new MemoryStream();
+                await dto.Image.CopyToAsync(ms);
+                product.Image = Convert.ToBase64String(ms.ToArray());
+            }
+            // Si no se envía, se conserva la imagen previa
 
             return NoContent();
         }
