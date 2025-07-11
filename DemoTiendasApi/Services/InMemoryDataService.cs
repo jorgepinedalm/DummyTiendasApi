@@ -97,7 +97,7 @@ namespace DemoTiendasApi.Services
                     PurchaseTaxId = 1,
                     SalesTaxId = 1,
                     PresentationId = 1,
-                    EAN = "7701234567890",
+                    EAN = "012345678905",
                     Name = "Leche Entera",
                     Description = "Leche entera en caja",
                     SalesPrice = 3000,
@@ -112,7 +112,7 @@ namespace DemoTiendasApi.Services
                     PurchaseTaxId = 2,
                     SalesTaxId = 2,
                     PresentationId = 2,
-                    EAN = "7709876543210",
+                    EAN = "036000291452",
                     Name = "Aceite Vegetal",
                     Description = "Aceite vegetal en botella",
                     SalesPrice = 12000,
@@ -135,6 +135,36 @@ namespace DemoTiendasApi.Services
                     Manufacturer = null,
                     Brand = null,
                     Image = "https://www.mipymestore.com/wp-content/uploads/2023/12/gaseosa-de-litro-y-medio-de-cocacola.png"
+                },
+                new() {
+                    Id = 4,
+                    MeasurementUnitId = 3,
+                    PurchaseTaxId = 2,
+                    SalesTaxId = 2,
+                    PresentationId = 2,
+                    EAN = "8412345678905",
+                    Name = "Aceite premier",
+                    Description = "Aceite vegetal en botella",
+                    SalesPrice = 28000,
+                    NetContent = 1800,
+                    Manufacturer = "Premier",
+                    Brand = "Premier",
+                    Image = "https://picsum.photos/200/300"
+                },
+                new() {
+                    Id = 5,
+                    MeasurementUnitId = 3,
+                    PurchaseTaxId = 1,
+                    SalesTaxId = 1,
+                    PresentationId = 2,
+                    EAN = "123456789012",
+                    Name = "Pepsi",
+                    Description = "Bebida gaseosa de postobon",
+                    SalesPrice = 4800,
+                    NetContent = 600,
+                    Manufacturer = "Postobon",
+                    Brand = "Postobon",
+                    Image = "https://www.mipymestore.com/wp-content/uploads/2023/12/gaseosa-de-litro-y-medio-de-cocacola.png"
                 }
             ];
 
@@ -152,6 +182,20 @@ namespace DemoTiendasApi.Services
                     [
                         new() { ProductId = 1, Quantity = 12, CostWithoutTax = 4000, CostWithTax = 4200, SalePrice= 4998, PurchaseTax = 0.05m,  TotalPrice = 50400 },
                         new() { ProductId = 2, Quantity = 5, CostWithoutTax = 10000, CostWithTax = 10000, SalePrice= 11900, PurchaseTax = 0m,  TotalPrice = 50000 }
+                    ]
+                },
+                new() {
+                    Id = 1,
+                    SupplierId = 2,
+                    WarehouseId = 2,
+                    PaymentMethodId = 2,
+                    InvoiceNumber = "FV-002",
+                    Date = DateTime.UtcNow.AddDays(-3),
+                    Products =
+                    [
+                        new() { ProductId = 1, Quantity = 12, CostWithoutTax = 4000, CostWithTax = 4200, SalePrice= 4998, PurchaseTax = 0.05m,  TotalPrice = 50400 },
+                        new() { ProductId = 2, Quantity = 5, CostWithoutTax = 10000, CostWithTax = 10000, SalePrice= 11900, PurchaseTax = 0m,  TotalPrice = 50000 },
+                        new() { ProductId = 4, Quantity = 15, CostWithoutTax = 28000, CostWithTax = 28000, SalePrice= 30859, PurchaseTax = 0m,  TotalPrice = 420000, ProfitPercentage = 0.1m },
                     ]
                 }
             };
