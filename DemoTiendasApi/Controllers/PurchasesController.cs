@@ -86,6 +86,8 @@ namespace DemoTiendasApi.Controllers
         {
             var query = _data.Purchases.AsQueryable();
 
+            var totalCount = query.Count();
+
             if (supplierId.HasValue)
                 query = query.Where(x => x.SupplierId == supplierId.Value);
 
@@ -98,7 +100,7 @@ namespace DemoTiendasApi.Controllers
             if (to.HasValue)
                 query = query.Where(x => x.Date <= to.Value);
 
-            var totalCount = query.Count();
+            
             if (page < 1) page = 1;
             if (pageSize < 1) pageSize = 10;
 
@@ -146,7 +148,7 @@ namespace DemoTiendasApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Purchase purchase)
+        public IActionResult Create(CreatePurchaseDto purchase)
         {
             var newId = _data.Purchases.Any() ? _data.Purchases.Max(p => p.Id) + 1 : 1;
 
